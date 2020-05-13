@@ -25,7 +25,6 @@ class NetworkManager: ObservableObject {
                 print("Unable to fetch data.")
                 return
             }
-
             guard let news = try? JSONDecoder().decode(News.self, from: data) else {
                 print("Unable to decode JSON.")
                 return

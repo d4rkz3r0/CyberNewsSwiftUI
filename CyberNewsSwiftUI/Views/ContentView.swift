@@ -10,15 +10,17 @@ import SwiftUI
 
 struct ContentView: View {
 
-    // Listen for updates on obsereved property "posts"
+    // Listen for updates on observed property "posts"
     @ObservedObject var networkManager = NetworkManager()
 
     var body: some View {
         NavigationView {
             List(networkManager.posts) { post in
-                return HStack {
-                    Text("\(post.points)")
-                    Text("\(post.title)")
+                NavigationLink(destination: PostView(postURL: post.url)) {
+                    HStack {
+                        Text("\(post.points)")
+                        Text("\(post.title)")
+                    }
                 }
             }
         .navigationBarTitle(Text("Cyber News"))
