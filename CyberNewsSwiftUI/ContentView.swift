@@ -9,12 +9,24 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    // Listen for updates on obsereved property "posts"
+    @ObservedObject var networkManager = NetworkManager()
+
     var body: some View {
         NavigationView {
-            List(posts) { post in
-                return Text("\(post.title)")
+            List(networkManager.posts) { post in
+                return HStack {
+                    Text("\(post.points)")
+                    Text("\(post.title)")
+                }
             }
         .navigationBarTitle(Text("Cyber News"))
+        }
+
+        // viewDidLoad() equivalent in SwiftUI
+        .onAppear {
+            self.networkManager.fetchPosts()
         }
     }
 }
@@ -24,14 +36,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-struct Post: Identifiable {
-    let id: String
-    let title: String
-}
-
-let posts = [
-    Post(id: "1", title: "Hello"),
-    Post(id: "2", title: "Posts go"),
-    Post(id: "3", title: "Here")
-]
